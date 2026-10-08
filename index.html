@@ -18,21 +18,71 @@
     ></script>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body class="bg-[#14181C]">
     <!-- Navbar -->
-    <nav class="bg-[#1C2127] flex items-center gap-27.5 py-5 px-8">
+    <nav class="bg-[#1C2127] py-5 px-8">
       <!-- Link Brand -->
-      <a href="#" class="text-3xl text-[#E4E7EB] font-bebas"> SINEMATA </a>
+      <div class="container flex items-center gap-27.5 max-w-[1300px] mx-auto">
+        <a href="#" class="text-3xl text-[#E4E7EB] font-bebas"> SINEMATA </a>
 
-      <!-- Navigations -->
-      <div class="text-[#9CA3AF] flex gap-6 font-inter">
-        <a href="#" class="hover:text-white">Home</a>
-        <a href="#" class="hover:text-white">Browse</a>
-        <a href="#" class="hover:text-white">Watchlist</a>
-        <a href="#" class="hover:text-white">My Reviews</a>
+        <!-- Navigations -->
+        <div class="text-[#9CA3AF] flex gap-6 font-inter">
+          <a href="#" class="hover:text-white">Home</a>
+          <a href="#" class="hover:text-white">Browse</a>
+          <a href="#" class="hover:text-white">Watchlist</a>
+          <a href="#" class="hover:text-white">My Reviews</a>
+        </div>
       </div>
     </nav>
-
     <!-- Section Trending Movies -->
+
+    <!-- Hero Section -->
+    <div
+      id="hero"
+      class="container relative max-w-[1300px] mx-auto mt-4 bg-linear-to-bl from-[#2A1810] to-[#0F1419] rounded-xl p-[50px]"
+    >
+      <div class="content max-w-[40%] flex flex-col items-start">
+        <!-- badge -->
+        <span
+          class="font-inter text-sm font-bold text-[#FF8000] bg-[#FF8000]/18 border border-[FF8000]/40 rounded-[3px] py-[5px] px-[10px]"
+          >FEATURED THIS WEEK</span
+        >
+        <!-- heading -->
+        <h1
+          class="font-bebas text-[60px] text-white max-w-[70%] leading-none my-4"
+        >
+          CHRONOS LETTERBOUND
+        </h1>
+        <!-- span -->
+        <div class="font-inter text-sm flex gap-x-3">
+          <span class="text-[#FBBF24]">★ 8.7</span>
+          <span class="text-[#9CA3AF]">2024 · 2h 18m · Sci-Fi · Drama</span>
+        </div>
+        <!-- paragraph -->
+        <p class="font-inter text-sm text-[#CBD5DB] my-5">
+          Seorang penjaga arsip menemukan surat-surat dari masa depan yang
+          ditulis untuknya — masing-masing meminta keputusan mustahil.
+        </p>
+        <!-- buttons -->
+        <div class="flex gap-x-3">
+          <button
+            class="py-3 px-7 bg-[#FF8000] text-[#14181C] font-inter font-bold rounded cursor-pointer hover:bg-[#FF7000]"
+          >
+            ▶ Lihat Detail
+          </button>
+          <button
+            class="py-3 px-7 bg-[#3A4049] text-white font-inter font-bold rounded cursor-pointer hover:bg-[#3A4049]"
+          >
+            + Watchlist
+          </button>
+        </div>
+      </div>
+
+      <div class="img">
+        <img src="./cards.png" alt="cards" / class="absolute top-[50px] right-[60px]">
+      </div>
+    </div>
+
+    <script src="./js/script.js"></script>
   </body>
 </html>
