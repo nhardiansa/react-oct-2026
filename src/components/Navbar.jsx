@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 function Navbar({ title }) {
   return (
     <>
@@ -10,12 +12,12 @@ function Navbar({ title }) {
 
           {/* <!-- Navigations --> */}
           <div className="text-[#9CA3AF] flex gap-6 font-inter">
-            <a href="/" className="hover:text-white">
+            <Link to="/" className="hover:text-white">
               Home
-            </a>
-            <a href="/browse" className="hover:text-white">
+            </Link>
+            <Link to="/browse" className="hover:text-white">
               Browse
-            </a>
+            </Link>
             <a href="/watchlist" className="hover:text-white">
               Watchlist
             </a>

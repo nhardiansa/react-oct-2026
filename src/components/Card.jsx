@@ -1,6 +1,6 @@
 function Card({ title, imgUrl, rating, year }) {
   return (
-    <div className="card min-w-50 flex flex-col gap-y-2">
+    <div className="card w-50 flex flex-col gap-y-2">
       <div className="image w-full h-75">
         <img
           className="object-cover h-full w-full rounded-lg"
