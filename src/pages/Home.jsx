@@ -1,61 +1,61 @@
+import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 
-const movies = [
-  {
-    title: "The Dark Knight",
-    rating: 9.0,
-    imgUrl:
-      "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=500&q=80",
-    year: 2008,
+const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZTY5NzNhNGE2YjhlNTJmMzFhNDFlYTdkNDM4Mjk0MyIsIm5iZiI6MTYzNTE1MTk4Ny43NTcsInN1YiI6IjYxNzY3MDczNmUwZDcyMDAyNDZhZDAwYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Zok9IaVBfX4-RSyU0O9iroE8nIFrHRDQok086ng2qP0",
   },
-  {
-    title: "Inception",
-    rating: 8.8,
-    imgUrl:
-      "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=500&q=80",
-    year: 2010,
-  },
-  {
-    title: "Interstellar",
-    rating: 8.7,
-    imgUrl:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=500&q=80",
-    year: 2014,
-  },
-  {
-    title: "Parasite",
-    rating: 8.5,
-    imgUrl:
-      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=500&q=80",
-    year: 2019,
-  },
-  {
-    title: "Spirited Away",
-    rating: 8.6,
-    imgUrl:
-      "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=500&q=80",
-    year: 2001,
-  },
-  {
-    title: "Whiplash",
-    rating: 8.5,
-    imgUrl:
-      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=500&q=80",
-    year: 2014,
-  },
-  {
-    title: "Spider-Man: Into the Spider-Verse",
-    rating: 8.4,
-    imgUrl:
-      "https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=500&q=80",
-    year: 2018,
-  },
-];
+};
 
 function Home() {
+  const [movies, setMovies] = useState([]);
+
+  const getTrendingMovies = async () => {
+    try {
+      // if (!query) return;
+
+      // set loading true
+      // setLoading(true);
+
+      // fetch api movie search by keyword
+      const rawResults = await fetch(
+        `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`,
+        options,
+      );
+      const results = await rawResults.json();
+      const movies = results.results;
+      const finalMovies = movies
+        .map((m) => ({
+          id: m.id,
+          title: m.title,
+          rating: m.vote_average.toFixed(1),
+          imgUrl: m.poster_path
+            ? `https://image.tmdb.org/t/p/w200${m.poster_path}`
+            : `https://placehold.co/200x300?text=${m.title}`,
+          year: m.release_date.substring(0, 4),
+        }))
+        .slice(0, 6);
+
+      // set movies
+      setMovies(finalMovies);
+
+      // set loading false
+      // setLoading(false);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getTrendingMovies();
+  }, []);
+
   return (
     <>
       <Navbar title={"SINEMATA"} />
@@ -73,7 +73,8 @@ function Home() {
         <div className="card-container flex gap-x-3 mt-8 max-w-325 overflow-x-hidden">
           {movies.map((movie) => (
             <Card
-              key={movie.title}
+              key={movie.id}
+              id={movie.id}
               title={movie.title}
               imgUrl={movie.imgUrl}
               rating={movie.rating}

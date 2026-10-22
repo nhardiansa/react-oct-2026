@@ -120,6 +120,7 @@ function Browse() {
             {movies.map((m, i) => (
               <Card
                 key={m.id}
+                id={m.id}
                 title={m.title}
                 imgUrl={m.imgUrl}
                 rating={m.rating}

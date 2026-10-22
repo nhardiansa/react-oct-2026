@@ -18,16 +18,16 @@ function Navbar({ title }) {
             <Link to="/browse" className="hover:text-white">
               Browse
             </Link>
-            <a href="/watchlist" className="hover:text-white">
+            <Link to="/watchlist" className="hover:text-white">
               Watchlist
-            </a>
-            <a href="/" className="hover:text-white">
+            </Link>
+            <Link to="/my-reviews" className="hover:text-white">
               My Reviews
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
-      <div className="py-12"></div>
+      <div className="py-9.5"></div>
     </>
   );
 }
