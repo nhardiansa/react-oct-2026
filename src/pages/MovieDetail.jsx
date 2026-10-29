@@ -3,14 +3,20 @@ import { useParams } from "react-router";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
-import { useWatchlist } from "../stores/watchlistStore";
+import useWatchlistFirebase from "../hooks/useWatchlistFirebase";
+import {
+  addToWatchlist as addToWatchlistFirebase,
+  removeFromWatchlist as removeFromWatchlistFirebase,
+} from "../lib/watchlists";
+import { useAuth } from "../stores/authStore";
 
 const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
 function MovieDetail() {
   const { id } = useParams();
-  const { watchlist, addToWatchlist, removeFromWatchlist, hasInWatchlist } =
-    useWatchlist((state) => state);
+  const { user } = useAuth((state) => state);
+
+  const itemsFirebase = useWatchlistFirebase(user);
 
   const [movieDetail, setMovieDetail] = useState({
     id: null,
@@ -127,27 +133,31 @@ function MovieDetail() {
     }
   };
 
-  const watchlistHandler = (movie) => {
+  const hasInWatchlist = (movie) => {
+    return itemsFirebase.some((m) => m.movieId === movie.id);
+  };
+
+  const watchlistHandler = async (movie) => {
     if (hasInWatchlist(movie)) {
-      removeFromWatchlist(movie);
+      await removeFromWatchlistFirebase(user, movie);
       setIsInWatchlist(false);
     } else {
-      addToWatchlist(movie);
+      await addToWatchlistFirebase(user, movie);
       setIsInWatchlist(true);
     }
   };
 
   useEffect(() => {
     if (id) {
+      console.log("Fetching movie details for ID:", itemsFirebase);
       getMovieDetail(id);
       getMovieCredits(id);
     }
-  }, [id]);
+  }, [id, itemsFirebase]);
 
   useEffect(() => {
-    console.log("watchlist:", watchlist);
     setIsInWatchlist(hasInWatchlist(movieDetail));
-  }, [watchlist, id, movieDetail]);
+  }, [itemsFirebase, id, movieDetail]);
 
   return (
     <div className="page min-h-screen">

@@ -5,8 +5,23 @@ import MovieDetail from "./pages/MovieDetail";
 import Watchlist from "./pages/Watchlist";
 import Login from "./pages/Login";
 import { HaveToLogin, NeedLogin } from "./components/Protected";
+import { useGenres, getGenres } from "./stores/genreStore";
+import { useEffect } from "react";
 
 function App() {
+  const { genres, setGenres } = useGenres((state) => state);
+
+  const fetchGenres = async () => {
+    const fetchedGenres = await getGenres();
+    setGenres(fetchedGenres);
+  };
+
+  useEffect(() => {
+    if (!genres || genres.length === 0) {
+      fetchGenres();
+    }
+  }, []);
+
   return (
     <Routes>
       <Route index element={<Home />} />

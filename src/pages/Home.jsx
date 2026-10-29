@@ -3,6 +3,7 @@ import Card from "../components/Card";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
+import { useGenres } from "../stores/genreStore";
 
 const options = {
   method: "GET",
@@ -15,6 +16,7 @@ const options = {
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const { genres } = useGenres((state) => state);
 
   const getTrendingMovies = async () => {
     try {
@@ -39,6 +41,7 @@ function Home() {
             ? `https://image.tmdb.org/t/p/w200${m.poster_path}`
             : `https://placehold.co/200x300?text=${m.title}`,
           year: m.release_date.substring(0, 4),
+          genre_ids: m.genre_ids,
         }))
         .slice(0, 6);
 
@@ -71,16 +74,26 @@ function Home() {
         </div>
         {/* <!-- Grid --> */}
         <div className="card-container flex gap-x-3 mt-8 max-w-325 overflow-x-hidden">
-          {movies.map((movie) => (
-            <Card
-              key={movie.id}
-              id={movie.id}
-              title={movie.title}
-              imgUrl={movie.imgUrl}
-              rating={movie.rating}
-              year={movie.year}
-            />
-          ))}
+          {movies.map((movie) => {
+            const moviesGenres = movie.genre_ids
+              .map((id) => {
+                const genre = genres.find((g) => g.id === id);
+                return genre ? genre.name : null;
+              })
+              .filter(Boolean);
+
+            return (
+              <Card
+                key={movie.id}
+                id={movie.id}
+                title={movie.title}
+                imgUrl={movie.imgUrl}
+                rating={movie.rating}
+                year={movie.year}
+                genres={moviesGenres}
+              />
+            );
+          })}
         </div>
       </section>
 

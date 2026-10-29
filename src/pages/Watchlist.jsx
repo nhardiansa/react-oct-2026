@@ -1,10 +1,13 @@
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Navbar from "../components/Navbar";
-import { useWatchlist } from "../stores/watchlistStore";
+import useWatchlistFirebase from "../hooks/useWatchlistFirebase";
+import { useAuth } from "../stores/authStore";
 
 function Watchlist() {
-  const { watchlist } = useWatchlist((state) => state);
+  const { user } = useAuth((state) => state);
+  const watchlist = useWatchlistFirebase(user); // Assuming you have a user object from your auth context
+
   return (
     <>
       <Navbar title={"SINEMATA"} />
@@ -20,11 +23,12 @@ function Watchlist() {
           {watchlist.map((movie) => (
             <Card
               key={movie.id}
-              id={movie.id}
+              id={movie.movieId}
               title={movie.title}
               rating={movie.rating}
-              imgUrl={movie.imgPoster}
+              imgUrl={movie.posterPath}
               year={movie.year}
+              genres={movie.genre}
             />
           ))}
         </div>
