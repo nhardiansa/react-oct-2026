@@ -61,7 +61,7 @@ function Home() {
 
   return (
     <>
-      <Navbar title={"SINEMATA"} />
+      <Navbar title={"SINEMATAS"} />
       <Hero />
 
       <section id="trending" className="container max-w-325 mx-auto mt-12">
